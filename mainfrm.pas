@@ -6,50 +6,56 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, EditBtn,
-  StdCtrls, ComCtrls, ExtCtrls, ActnList;
+  StdCtrls, ComCtrls, ExtCtrls, ActnList, IniPropStorage;
 
 type
 
-  { TForm1 }
+  { TFrmMain }
 
-  TForm1 = class(TForm)
+  TFrmMain = class(TForm)
     actAdd: TAction;
     actRemove: TAction;
-    ActionList1: TActionList;
+    alMain: TActionList;
     btnAdd: TButton;
-    btnDelete: TButton;
+    btnRemove: TButton;
+    Button1: TButton;
     chkCustomConf: TCheckBox;
     edtLazDir: TDirectoryEdit;
     edtName: TEdit;
     edtConfDir: TDirectoryEdit;
     edtVersion: TEdit;
+    ipsMain: TIniPropStorage;
     lvLazEntries: TListView;
     Panel1: TPanel;
     procedure actAddExecute(Sender: TObject);
     procedure actAddUpdate(Sender: TObject);
     procedure actRemoveExecute(Sender: TObject);
     procedure actRemoveUpdate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
     procedure chkCustomConfChange(Sender: TObject);
     procedure edtLazDirChange(Sender: TObject);
     procedure lvLazEntriesColumnClick(Sender: TObject; Column: TListColumn);
   private
     procedure AddEntry;
-
-
   public
 
   end;
 
+  { TODO -oRequion : add edit function }
+  { TODO -oRequion : think about usage of a db for enties and settings }
+  { TODO -oRequion : think about settings which could be saved to a db :D }
+  { TODO -oRequion : function to add desktop icon for specific entry }
+
 var
-  Form1: TForm1;
+  FrmMain: TFrmMain;
 
 implementation
 
 {$R *.lfm}
 
-{ TForm1 }
+{ TFrmMain }
 
-procedure TForm1.edtLazDirChange(Sender: TObject);
+procedure TFrmMain.edtLazDirChange(Sender: TObject);
 var
   TempFile: TStringList;
   DirName, FileNameVersion, FileNameLaz, VersionStr: string;
@@ -61,7 +67,12 @@ begin
   if DirectoryExists(DirName) then
   begin
     FileNameVersion := DirName + PathDelim + 'ide' + PathDelim + 'version.inc';
-    FileNameLaz := DirName + PathDelim + 'lazarus.exe';
+    FileNameLaz := DirName + PathDelim + 'lazarus';
+
+    {$IfDef Windows}
+    FileNameLaz := FileNameLaz + '.exe';
+    {$EndIf}
+
     if FileExists(FileNameLaz) and FileExists(FileNameVersion) then
     begin
       TempFile := TStringList.Create;
@@ -80,13 +91,13 @@ begin
   end;
 end;
 
-procedure TForm1.lvLazEntriesColumnClick(Sender: TObject; Column: TListColumn);
+procedure TFrmMain.lvLazEntriesColumnClick(Sender: TObject; Column: TListColumn);
 begin
   (Sender as TListView).SortColumn := Column.Index;
   (Sender as TListView).Sort;
 end;
 
-procedure TForm1.AddEntry;
+procedure TFrmMain.AddEntry;
 var
   li: TListItem;
 begin
@@ -101,7 +112,7 @@ begin
     li.SubItems.Add('(Standard)');
 end;
 
-procedure TForm1.chkCustomConfChange(Sender: TObject);
+procedure TFrmMain.chkCustomConfChange(Sender: TObject);
 begin
   edtConfDir.Enabled := chkCustomConf.Checked;
   if chkCustomConf.Checked then
@@ -110,7 +121,7 @@ begin
     edtConfDir.Directory := '(Standard)';
 end;
 
-procedure TForm1.actAddExecute(Sender: TObject);
+procedure TFrmMain.actAddExecute(Sender: TObject);
 var
   LiFound: TListItem;
 begin
@@ -140,20 +151,35 @@ begin
   //chkCustomConf.Checked := False;
 end;
 
-procedure TForm1.actAddUpdate(Sender: TObject);
+procedure TFrmMain.actAddUpdate(Sender: TObject);
 begin
   btnAdd.Enabled := not SameText(edtLazDir.Directory, '') and not
     SameText(edtName.Text, '') and not SameText(edtVersion.Text, '');
 end;
 
-procedure TForm1.actRemoveExecute(Sender: TObject);
+procedure TFrmMain.actRemoveExecute(Sender: TObject);
 begin
   lvLazEntries.Items[lvLazEntries.ItemIndex].Delete;
 end;
 
-procedure TForm1.actRemoveUpdate(Sender: TObject);
+procedure TFrmMain.actRemoveUpdate(Sender: TObject);
 begin
   actRemove.Enabled := (lvLazEntries.Items.Count > 0) and (lvLazEntries.ItemIndex > -1);
+end;
+
+procedure TFrmMain.Button1Click(Sender: TObject);
+var
+  blafoo: TStringList;
+  I: integer;
+begin
+  { TODO -oRequion : add functionality to search fs for installations }
+  blafoo := FindAllFiles('/home', 'lazarus');
+
+  for I := 0 to blafoo.Count - 1 do
+  begin
+    if Pos('MacOS', blafoo[I]) = 0 then
+      ShowMessage(blafoo[I]);
+  end;
 end;
 
 end.

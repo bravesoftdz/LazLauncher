@@ -1,11 +1,12 @@
-object Form1: TForm1
-  Left = -1016
+object FrmMain: TFrmMain
+  Left = 348
   Height = 456
-  Top = 238
+  Top = 156
   Width = 695
-  Caption = 'Form1'
+  Caption = 'LazLauncher'
   ClientHeight = 456
   ClientWidth = 695
+  SessionProperties = 'Top;Width;WindowState;Height;Left'
   LCLVersion = '1.7'
   object lvLazEntries: TListView
     Left = 208
@@ -18,22 +19,22 @@ object Form1: TForm1
       item
         AutoSize = True
         Caption = 'Bezeichnung'
-        Width = 72
+        Width = 93
       end    
       item
         AutoSize = True
         Caption = 'Version'
-        Width = 59
+        Width = 58
       end    
       item
         AutoSize = True
         Caption = 'Pfad'
-        Width = 46
+        Width = 39
       end    
       item
         AutoSize = True
         Caption = 'Konfigurationspfad'
-        Width = 314
+        Width = 281
       end>
     ReadOnly = True
     RowSelect = True
@@ -67,7 +68,7 @@ object Form1: TForm1
     end
     object edtVersion: TEdit
       Left = 8
-      Height = 21
+      Height = 23
       Top = 72
       Width = 184
       Color = clInactiveCaptionText
@@ -76,7 +77,7 @@ object Form1: TForm1
     end
     object edtConfDir: TDirectoryEdit
       Left = 28
-      Height = 21
+      Height = 23
       Top = 104
       Width = 164
       Directory = '(Standard)'
@@ -90,16 +91,16 @@ object Form1: TForm1
     end
     object edtName: TEdit
       Left = 8
-      Height = 21
+      Height = 23
       Top = 40
       Width = 184
       TabOrder = 1
     end
     object chkCustomConf: TCheckBox
       Left = 8
-      Height = 17
+      Height = 22
       Top = 106
-      Width = 20
+      Width = 22
       OnChange = chkCustomConfChange
       TabOrder = 3
     end
@@ -107,11 +108,11 @@ object Form1: TForm1
       Left = 8
       Height = 25
       Top = 144
-      Width = 75
+      Width = 88
       Action = actAdd
       TabOrder = 5
     end
-    object btnDelete: TButton
+    object btnRemove: TButton
       Left = 117
       Height = 25
       Top = 144
@@ -119,8 +120,17 @@ object Form1: TForm1
       Action = actRemove
       TabOrder = 6
     end
+    object Button1: TButton
+      Left = 40
+      Height = 25
+      Top = 280
+      Width = 75
+      Caption = 'Button1'
+      OnClick = Button1Click
+      TabOrder = 7
+    end
   end
-  object ActionList1: TActionList
+  object alMain: TActionList
     Left = 357
     Top = 203
     object actAdd: TAction
@@ -135,5 +145,11 @@ object Form1: TForm1
       OnExecute = actRemoveExecute
       OnUpdate = actRemoveUpdate
     end
+  end
+  object ipsMain: TIniPropStorage
+    StoredValues = <>
+    IniSection = 'general'
+    Left = 351
+    Top = 265
   end
 end
