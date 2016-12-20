@@ -30,7 +30,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="2">
+    <Units Count="5">
       <Unit0>
         <Filename Value="LazLauncher.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -43,6 +43,22 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="MainFrm"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="maindm.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="MainDM"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="resstr.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ResStr"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="searchfrm.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit4>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

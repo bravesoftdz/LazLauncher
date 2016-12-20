@@ -1,11 +1,13 @@
 object FrmMain: TFrmMain
-  Left = 348
+  Left = 387
   Height = 456
-  Top = 156
+  Top = 153
   Width = 695
   Caption = 'LazLauncher'
   ClientHeight = 456
   ClientWidth = 695
+  OnClose = FormClose
+  OnCreate = FormCreate
   SessionProperties = 'Top;Width;WindowState;Height;Left'
   LCLVersion = '1.7'
   object lvLazEntries: TListView
@@ -18,8 +20,8 @@ object FrmMain: TFrmMain
     Columns = <    
       item
         AutoSize = True
-        Caption = 'Bezeichnung'
-        Width = 93
+        Caption = 'Title'
+        Width = 39
       end    
       item
         AutoSize = True
@@ -28,13 +30,13 @@ object FrmMain: TFrmMain
       end    
       item
         AutoSize = True
-        Caption = 'Pfad'
-        Width = 39
+        Caption = 'Path'
+        Width = 38
       end    
       item
         AutoSize = True
-        Caption = 'Konfigurationspfad'
-        Width = 281
+        Caption = 'Configpath'
+        Width = 336
       end>
     ReadOnly = True
     RowSelect = True
@@ -80,14 +82,14 @@ object FrmMain: TFrmMain
       Height = 23
       Top = 104
       Width = 164
-      Directory = '(Standard)'
+      Directory = '(Default)'
       ShowHidden = False
       ButtonWidth = 23
       NumGlyphs = 1
       Enabled = False
       MaxLength = 0
       TabOrder = 4
-      Text = '(Standard)'
+      Text = '(Default)'
     end
     object edtName: TEdit
       Left = 8
@@ -104,30 +106,73 @@ object FrmMain: TFrmMain
       OnChange = chkCustomConfChange
       TabOrder = 3
     end
-    object btnAdd: TButton
+    object gbAddRem: TGroupBox
       Left = 8
-      Height = 25
-      Top = 144
-      Width = 88
-      Action = actAdd
+      Height = 86
+      Top = 132
+      Width = 184
+      Caption = 'Add / Remove'
+      ClientHeight = 69
+      ClientWidth = 180
       TabOrder = 5
+      object btnRemove: TButton
+        Left = 95
+        Height = 25
+        Top = 6
+        Width = 85
+        Action = actRemove
+        TabOrder = 1
+      end
+      object btnAdd: TButton
+        Left = 0
+        Height = 25
+        Top = 6
+        Width = 85
+        Action = actAdd
+        TabOrder = 0
+      end
+      object btnSearch: TButton
+        Left = 0
+        Height = 25
+        Top = 37
+        Width = 180
+        Action = actSearch
+        TabOrder = 2
+      end
     end
-    object btnRemove: TButton
-      Left = 117
-      Height = 25
-      Top = 144
-      Width = 75
-      Action = actRemove
+    object gbEdit: TGroupBox
+      Left = 8
+      Height = 86
+      Top = 226
+      Width = 184
+      Caption = 'Edit'
+      ClientHeight = 69
+      ClientWidth = 180
       TabOrder = 6
-    end
-    object Button1: TButton
-      Left = 40
-      Height = 25
-      Top = 280
-      Width = 75
-      Caption = 'Button1'
-      OnClick = Button1Click
-      TabOrder = 7
+      object btnEdit: TButton
+        Left = 0
+        Height = 25
+        Top = 6
+        Width = 85
+        Action = actEdit
+        TabOrder = 0
+      end
+      object btnSave: TButton
+        Left = 95
+        Height = 25
+        Top = 6
+        Width = 85
+        Action = actSave
+        TabOrder = 1
+      end
+      object btnAbort: TButton
+        Left = 0
+        Height = 25
+        Top = 37
+        Width = 180
+        Action = actAbort
+        TabOrder = 2
+      end
     end
   end
   object alMain: TActionList
@@ -135,15 +180,38 @@ object FrmMain: TFrmMain
     Top = 203
     object actAdd: TAction
       Category = 'LauncherControls'
-      Caption = 'Hinzufügen'
+      Caption = 'Add'
       OnExecute = actAddExecute
       OnUpdate = actAddUpdate
     end
     object actRemove: TAction
       Category = 'LauncherControls'
-      Caption = 'Entfernen'
+      Caption = 'Remove'
       OnExecute = actRemoveExecute
       OnUpdate = actRemoveUpdate
+    end
+    object actEdit: TAction
+      Category = 'LauncherControls'
+      Caption = 'Edit'
+      OnExecute = actEditExecute
+      OnUpdate = actEditUpdate
+    end
+    object actSave: TAction
+      Category = 'LauncherControls'
+      Caption = 'Save'
+      OnExecute = actSaveExecute
+      OnUpdate = actSaveUpdate
+    end
+    object actAbort: TAction
+      Category = 'LauncherControls'
+      Caption = 'Abort'
+      OnExecute = actAbortExecute
+      OnUpdate = actAbortUpdate
+    end
+    object actSearch: TAction
+      Category = 'LauncherControls'
+      Caption = 'Search'
+      OnExecute = actSearchExecute
     end
   end
   object ipsMain: TIniPropStorage
